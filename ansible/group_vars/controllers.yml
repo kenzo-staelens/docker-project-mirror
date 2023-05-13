@@ -1,0 +1,4 @@
+ansible_user: student
+ansible_password: student
+ansible_connection: ssh
+ansible_become_pass: student

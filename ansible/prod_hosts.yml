@@ -1,0 +1,12 @@
+---
+#production hosts file
+all:
+  hosts:
+  children:
+    webservers:
+      node1: 10.129.24.112
+      node2: 10.129.24.223
+    loadbalancers:
+      loadbalancer1: 10.129.24.232
+    controllers:
+      controller1: 10.129.24.199
