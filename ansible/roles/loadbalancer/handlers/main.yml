@@ -1,2 +1,7 @@
 ---
 # handlers file for roles/loadbalancer
+- name: Restart Firewall
+  ansible.builtin.service:
+    name: "firewalld"
+    state: started
+    enabled: true

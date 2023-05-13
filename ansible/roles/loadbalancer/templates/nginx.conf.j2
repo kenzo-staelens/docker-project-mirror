@@ -35,10 +35,9 @@ http {
     # for more information.
 
     upstream backend {
-    #    {% for host in webserver_hosts %}
-    #        server {{host}};
-    #    {% endfor %}
-        server 10.129.24.199:8001;
+        {% for host in groups['webservers'] | map('extract', hostvars, ['ansible_host']) %}
+            server {{host}}:8001;
+        {% endfor %}
     }
 
     server {
