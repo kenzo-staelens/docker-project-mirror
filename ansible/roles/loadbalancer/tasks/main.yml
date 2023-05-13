@@ -13,6 +13,26 @@
     group: root
     mode: '644'
 
+- name: Ensure openssl
+  ansible.builtin.dnf:
+    name: openssl
+    state: latest
+
+- name: Ensure cryptography
+  ansible.builtin.pip:
+    name: "cryptography"
+
+- name: Create SSL private key
+  community.crypto.openssl_privatekey:
+    path: "/dockerfiles/loadbalancer.key"
+
+- name: Generate certificates
+  community.crypto.x509_certificate:
+    path: "/dockerfiles/loadbalancer.crt"
+    privatekey_path: "/dockerfiles/loadbalancer.key"
+    provider: selfsigned
+    state: present
+
 - name: Loadbalancer template
   ansible.builtin.template:
     src: nginx.conf.j2
