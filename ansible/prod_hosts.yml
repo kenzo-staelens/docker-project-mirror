@@ -4,9 +4,16 @@ all:
   hosts:
   children:
     webservers:
-      node1: 10.129.24.112
-      node2: 10.129.24.223
+      hosts:
+        node1:
+          ansible_host: 10.129.24.112
+        node2:
+          ansible_host: 10.129.24.223
     loadbalancers:
-      loadbalancer1: 10.129.24.232
+      hosts:
+        loadbalancer1:
+          ansible_host: 10.129.24.232
     controllers:
-      controller1: 10.129.24.199
+      hosts:
+        controller1:
+          ansible_host: 10.129.24.199

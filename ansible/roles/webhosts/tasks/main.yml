@@ -1,2 +1,18 @@
 ---
 # tasks file for roles/webhosts
+- name: Ensure required installations
+  ansible.builtin.apt:
+    name: "docker-ce"
+    state: present
+    update_cache: true
+  loop:
+    - docker-ce
+    - python3-pip
+
+- name: Install python docker modules
+  ansible.builtin.pip:
+    name: docker
+    state: present
+
+# - name: Deploy container
+#   community.docker.docker_container:

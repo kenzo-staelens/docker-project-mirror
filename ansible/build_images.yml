@@ -1,0 +1,26 @@
+---
+- name: Build and push images
+  hosts: controllers
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install python requests package
+      ansible.builtin.pip:
+        name: requests
+        state: present
+
+    - name: Log into gitlab registry
+      community.docker.docker_login:
+        registry_url: registry.gitlab.com
+        username: kenzo.staelens@student.odisee.be
+        password: PASSWORD_GOES_HERE
+
+    - name: Build image
+      community.docker.docker_image:
+        build:
+          # /home/student/docker_project/2223-iac_docker_project-staelens-kenzo/ansible/docker_content/webserver
+          path: /home/student/docker_project/2223-iac_docker_project-staelens-kenzo/ansible/docker_content/webserver
+        name: registry.gitlab.com/ikdoeict/kenzo.staelens/2223-iac_docker_project-staelens-kenzo/webserver
+        tag: flask-iac
+        push: true
+        source: build

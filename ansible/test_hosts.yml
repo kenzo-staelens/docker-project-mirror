@@ -1,12 +1,19 @@
 ---
-#production hosts file
+#test hosts file
 all:
   hosts:
   children:
     webservers:
-      node1: 10.129.24.113
-      node2: 10.129.24.234
+      hosts:
+        node1:
+          ansible_host: 10.129.24.113
+        node2:
+          ansible_host: 10.129.24.234
     loadbalancers:
-      loadbalancer1: 10.129.24.232
+      hosts:
+        loadbalancer1:
+          ansible_host: 10.129.24.232
     controllers:
-      controller1: 10.129.24.199
+      hosts:
+        controller1:
+          ansible_host: 10.129.24.199
