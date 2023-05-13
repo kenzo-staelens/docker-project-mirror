@@ -14,6 +14,7 @@
         registry_url: registry.gitlab.com
         username: kenzo.staelens@student.odisee.be
         password: PASSWORD_GOES_HERE
+      failed_when: false
 
     - name: Build image
       community.docker.docker_image:
