@@ -1,9 +1,14 @@
 ---
-- name: Build and push images
-  hosts: controllers
+- name: Setup docker login
+  hosts: all
   gather_facts: false
   become: true
   tasks:
+    - name: Install pip
+      ansible.builtin.package:
+        name: python3-pip
+        state: present
+
     - name: Install python requests package
       ansible.builtin.pip:
         name: requests
@@ -13,9 +18,14 @@
       community.docker.docker_login:
         registry_url: registry.gitlab.com
         username: kenzo.staelens@student.odisee.be
-        password: PASSWORD_GOES_HERE
+        password: "{{ password }}"
       failed_when: false
 
+- name: Build and push images
+  hosts: controllers
+  gather_facts: false
+  become: true
+  tasks:
     - name: Build image
       community.docker.docker_image:
         build:
@@ -25,3 +35,23 @@
         tag: flask-iac
         push: true
         source: build
+
+- name: Disable ipv6
+  hosts: webservers
+  become: true
+  tasks:
+    - name: Set values to disable
+      ansible.posix.sysctl:
+        name: "{{ item }}"
+        value: "1"
+        reload: true
+      loop:
+        - net.ipv6.conf.all.disable_ipv6
+        - net.ipv6.conf.default.disable_ipv6
+        - net.ipv6.conf.lo.disable_ipv6
+
+- name: Run webservers
+  hosts: webservers
+  become: true
+  roles:
+    - webhosts

@@ -1,18 +1,21 @@
 ---
 # tasks file for roles/webhosts
-- name: Ensure required installations
+- name: Add Docker GPG apt Key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+- name: Add Docker Repository
+  ansible.builtin.apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+- name: Update apt and install docker-ce
   ansible.builtin.apt:
-    name: "docker-ce"
-    state: present
+    name: docker-ce
+    state: latest
     update_cache: true
-  loop:
-    - docker-ce
-    - python3-pip
 
-- name: Install python docker modules
-  ansible.builtin.pip:
-    name: docker
-    state: present
-
-# - name: Deploy container
-#   community.docker.docker_container:
+- name: Pull image
+  community.docker.docker_image:
+    name: registry.gitlab.com/ikdoeict/kenzo.staelens/2223-iac_docker_project-staelens-kenzo/webserver
+    tag: flask-iac
+    source: pull
