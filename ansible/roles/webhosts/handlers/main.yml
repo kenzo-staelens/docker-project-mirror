@@ -1,2 +1,6 @@
 ---
 # handlers file for roles/webhosts
+- name: Restart Firewall
+  ansible.builtin.service:
+    name: ufw
+    state: restarted

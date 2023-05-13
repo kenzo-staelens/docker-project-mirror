@@ -19,3 +19,38 @@
     name: registry.gitlab.com/ikdoeict/kenzo.staelens/2223-iac_docker_project-staelens-kenzo/webserver
     tag: flask-iac
     source: pull
+
+- name: Enable ufw
+  community.general.ufw:
+    state: enabled
+
+- name: Setup firewall rules
+  community.general.ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  loop:
+    - '8001'
+    - '22'
+  notify:
+    - Restart Firewall
+
+- name: Run image env
+  community.docker.docker_container:
+    image: registry.gitlab.com/ikdoeict/kenzo.staelens/2223-iac_docker_project-staelens-kenzo/webserver:flask-iac
+    ports:
+      - 8001:5000
+    auto_remove: true
+    name: webserver
+    env:
+      NAME: "{{ envname }}"
+  when: envname is defined
+
+- name: Run image no env
+  community.docker.docker_container:
+    image: registry.gitlab.com/ikdoeict/kenzo.staelens/2223-iac_docker_project-staelens-kenzo/webserver:flask-iac
+    ports:
+      - 8001:5000
+    auto_remove: true
+    name: webserver
+  when: not envname is defined
