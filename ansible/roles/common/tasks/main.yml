@@ -19,4 +19,29 @@
   ansible.builtin.dnf:
     name: docker
     state: present
+  when: not ansible_user == 'ubuntu' and 'controllers' not in group_names
+
+- name: Install pip
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+    update_cache: true
+  when: ansible_user == 'ubuntu'
+- name: Install pip dnf
+  ansible.builtin.dnf:
+    name: python3-pip
+    state: present
+    update_cache: true
   when: not ansible_user == 'ubuntu'
+- name: Install python requests package
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - requests
+    - docker
+- name: Log into gitlab registry
+  community.docker.docker_login:
+    registry_url: registry.gitlab.com
+    username: "{{ username }}"
+    password: "{{ password }}"
