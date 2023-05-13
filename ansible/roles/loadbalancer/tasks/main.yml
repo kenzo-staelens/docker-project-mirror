@@ -1,13 +1,8 @@
 ---
 # tasks file for roles/loadbalancer
-- name: Install docker
-  ansible.builtin.dnf:
-    name: docker
-    state: present
-
 - name: Copy required files
-  ansible.builtin.copy:
-    src: 'my_files/'
+  ansible.builtin.file:
+    state: directory
     dest: /dockerfiles
     owner: root
     group: root
@@ -60,6 +55,11 @@
     name: podman
     enabled: true
     state: started
+
+- name: Remove current running loadbalancer
+  containers.podman.podman_container:
+    state: absent
+    name: loadbalancer
 
 - name: Run loadbalancer
   containers.podman.podman_container:

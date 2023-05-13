@@ -8,7 +8,7 @@ all:
         node1:
           ansible_host: 10.129.24.112
         node2:
-          ansible_host: 10.129.24.223
+          ansible_host: 10.129.24.233
     loadbalancers:
       hosts:
         loadbalancer1:
@@ -17,3 +17,5 @@ all:
       hosts:
         controller1:
           ansible_host: 10.129.24.199
+  vars:
+    stage: "prod"

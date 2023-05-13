@@ -1,0 +1,22 @@
+---
+# tasks file for roles/dockerInstall
+- name: Add Docker GPG apt Key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  when: ansible_user == 'ubuntu'
+- name: Add Docker Repository
+  ansible.builtin.apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu focal stable
+    state: present
+  when: ansible_user == 'ubuntu'
+- name: Update apt and install docker-ce
+  ansible.builtin.apt:
+    name: docker-ce
+    state: latest
+
+- name: Install docker
+  ansible.builtin.dnf:
+    name: docker
+    state: present
+  when: not ansible_user == 'ubuntu'

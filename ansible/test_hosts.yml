@@ -17,3 +17,5 @@ all:
       hosts:
         controller1:
           ansible_host: 10.129.24.199
+  vars:
+    stage: "test"
