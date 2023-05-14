@@ -21,7 +21,7 @@
     state: present
   when: not ansible_user == 'ubuntu'
 
-- name: wait (15 seconds) for lock file to clear
+- name: Wait (15 seconds) for lock file to clear
   ansible.builtin.pause:
     seconds: 15
 
@@ -56,10 +56,10 @@
     state: started
     enabled: true
   when: not ansible_user == 'ubuntu'
-  
+
 - name: Log into gitlab registry (docker)
   community.docker.docker_login:
     registry_url: registry.gitlab.com
     username: "{{ username }}"
     password: "{{ password }}"
-  when: nologin is not defined or nologin == false
+  when: nologin is not defined or not nologin

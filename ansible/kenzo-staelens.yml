@@ -46,3 +46,14 @@
   become: true
   roles:
     - loadbalancer
+
+- name: Print links
+  hosts: localhost
+  become: false
+  tasks:
+    - name: Print links
+      ansible.builtin.debug:
+        msg: "{{ stage + '_' + hostvars[item]['inventory_hostname'] }}: \
+        https://{{ hostvars[item]['ansible_host'] }}:{{ 8000 if item in groups['loadbalancers'] else 8001 }}"
+      with_items:
+        - "{{ groups['loadbalancers'] + groups['webservers'] }}"
