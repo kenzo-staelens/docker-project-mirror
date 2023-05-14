@@ -40,8 +40,28 @@
   loop:
     - requests
     - docker
-- name: Log into gitlab registry
+- name: Enable docker
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+  when: ansible_user == 'ubuntu'
+- name: Enable podman
+  ansible.builtin.service:
+    name: podman
+    state: started
+    enabled: true
+  when: not ansible_user == 'ubuntu'
+  
+- name: Log into gitlab registry (docker)
   community.docker.docker_login:
     registry_url: registry.gitlab.com
     username: "{{ username }}"
     password: "{{ password }}"
+#   when: ansible_user == 'ubuntu'
+# - name: Log into gitlab registry (podman)
+#   community.docker.docker_login:
+#     registry_url: registry.gitlab.com
+#     username: "{{ username }}"
+#     password: "{{ password }}"
+#   when: not ansible_user == 'ubuntu'
