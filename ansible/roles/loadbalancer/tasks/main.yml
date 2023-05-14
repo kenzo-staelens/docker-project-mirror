@@ -65,9 +65,11 @@
   containers.podman.podman_container:
     image: "nginx:1.21.6"
     name: loadbalancer
-    auto_remove: true
+    # auto_remove: true
+    generate_systemd:
+      restart_policy: "always"
     ports:
-      - 8000:80
+      - 8000:443
     volumes:
       - /dockerfiles:/conf:z
       - /dockerfiles/nginx.conf:/etc/nginx/nginx.conf:ro
