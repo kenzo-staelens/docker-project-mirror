@@ -29,7 +29,7 @@
     auto_remove: false
     pull: true
     name: webserver
-    command: "{{ stage + '.py' }}"
+    command: "{{ stage }}"
     env:
       NAME: "{{ envname }}"
   when: envname is defined
@@ -41,5 +41,5 @@
       - 8001:5000
     auto_remove: true
     name: webserver
-    command: "{{ stage + '.py' }}"
+    command: "{{ stage }}"
   when: not envname is defined

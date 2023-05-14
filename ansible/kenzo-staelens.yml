@@ -24,14 +24,16 @@
   gather_facts: false
   become: true
   tasks:
-    - name: Build image
-      community.docker.docker_image:
-        build:
-          path: /home/student/docker_project/2223-iac_docker_project-staelens-kenzo/ansible/docker_content/webserver
+    - name: Push (force) latest image
+      containers.podman.podman_image:
+        path: /home/student/docker_project/2223-iac_docker_project-staelens-kenzo/ansible/docker_content/webserver
         name: registry.gitlab.com/ikdoeict/kenzo.staelens/2223-iac_docker_project-staelens-kenzo/webserver
         tag: flask-iac
+        force: true # updates worden zonder force niet gepusht
         push: true
-        source: build
+        state: build
+        push_args:
+          dest: registry.gitlab.com/ikdoeict/kenzo.staelens/2223-iac_docker_project-staelens-kenzo/webserver
 
 - name: Run webservers
   hosts: webservers

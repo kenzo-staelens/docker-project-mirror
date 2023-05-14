@@ -1,7 +1,9 @@
 FROM python:3.11
-COPY . /app
+WORKDIR /app
+COPY . .
 ENV NAME="DEFAULT_NAME"
+RUN pip install -r /app/requirements.txt
 # ENV NAME="DEFAULT_NAME" HOSTNAME="HOSTNAME"
 # runs pip install requirements and program by filename
-ENTRYPOINT ["/bin/bash", "/app/start.sh"]
-CMD ["test.py"]
+ENTRYPOINT ["python", "main.py"]
+CMD ["prod"]

@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <style>
+        p {
+            margin: 0px;
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .vertical-center {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+        </style>
+    </head>
+
+    <body bgcolor="orange">
+        <div class="vertical-center">
+            <p>welcome to docker, {{ user }}</p><br>
+            <p>running on host: {{ host }}</p><br><br>
+            <p>this is production</p>
+        <div>
+    </body>
+</html>

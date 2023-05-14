@@ -19,7 +19,7 @@
   ansible.builtin.dnf:
     name: docker
     state: present
-  when: not ansible_user == 'ubuntu' and 'controllers' not in group_names
+  when: not ansible_user == 'ubuntu'
 
 - name: Install pip
   ansible.builtin.apt:
