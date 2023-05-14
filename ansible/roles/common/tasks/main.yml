@@ -58,10 +58,4 @@
     registry_url: registry.gitlab.com
     username: "{{ username }}"
     password: "{{ password }}"
-#   when: ansible_user == 'ubuntu'
-# - name: Log into gitlab registry (podman)
-#   community.docker.docker_login:
-#     registry_url: registry.gitlab.com
-#     username: "{{ username }}"
-#     password: "{{ password }}"
-#   when: not ansible_user == 'ubuntu'
+  when: nologin is not defined or nologin == false

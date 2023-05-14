@@ -1,7 +1,7 @@
 ---
 - name: Disable ubuntu IPv6
   become: true
-  hosts: webservers
+  hosts: all
   tasks:
     - name: Disable ipv6
       ansible.posix.sysctl:
