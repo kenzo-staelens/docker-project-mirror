@@ -1,5 +1,5 @@
 ## dependencies installeren
-```
+```bash
 ansible-galaxy install -r collections/requirements.yml
 ```
 
@@ -22,9 +22,13 @@ prod environment
 ansible/run_prod.sh "optional name argument"
 ```
 
-deze zijn equivalent voor het uitvoeren van 
-`ansible-playbook kenzo-staelens.yml -i test_hosts.yml --extra-vars "username=$user password=$pass"` of  
-`ansible-playbook kenzo-staelens.yml -i prod_hosts.yml --extra-vars "nologin=true"` als geen user of wachtwoord wordt meegegeven  
-alternatief met het optionele name argument geldt dan 
-`ansible-playbook kenzo-staelens.yml -i prod_hosts.yml --extra-vars "nologin=true envname=\"$1\""` en  
-`ansible-playbook kenzo-staelens.yml -i prod_hosts.yml --extra-vars "username=$user password=$pass envname=\"$1\""` en   
+dit komt overeen met het uitvoeren van een van volgende commandos
+
+```bash
+ansible-playbook kenzo-staelens.yml -i test_hosts.yml --extra-vars "username=$user password=$pass"  
+ansible-playbook kenzo-staelens.yml -i prod_hosts.yml --extra-vars "nologin=true" # als geen user of wachtwoord wordt meegegeven  
+
+# alternatief met het optionele name argument geldt dan 
+ansible-playbook kenzo-staelens.yml -i prod_hosts.yml --extra-vars "nologin=true envname=\"$1\""
+ansible-playbook kenzo-staelens.yml -i prod_hosts.yml --extra-vars "username=$user password=$pass envname=\"$1\""
+```
